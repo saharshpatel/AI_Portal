@@ -28,9 +28,6 @@ class LoginPage:
         login_button = WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.login_button))
         login_button.click()
 
-    def login(self, param, param1):
-        pass
-
     def perform_login(self, email, password):
         self.click_sign_in()
         self.enter_credentials(email, password)
