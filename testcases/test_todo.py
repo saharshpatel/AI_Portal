@@ -1,14 +1,19 @@
 import pytest
 from pages.todopage import ToDoPage
-import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from helper.policy_helper import PolicyHelper
+import time
 
 
 @pytest.mark.usefixtures("login")
 def test_todo_functionality(login):
     todo_page = ToDoPage(login)
+    policy_helper = PolicyHelper(login)
+    time.sleep(2)
+    policy_helper.cancel_policy_popup()
+    time.sleep(1)
     todo_page.click_expand_todo()
     time.sleep(2)
     todo_page.click_add_todo()
@@ -36,7 +41,7 @@ def test_todo_functionality(login):
 
     time.sleep(1)
     todo_page.click_assign_unassign_button()
-    todo_page.enter_assignment_search("saharsh patel")
+    todo_page.enter_assignment_search("saharsh")
     time.sleep(2)
     todo_page.select_assignment_result()
     time.sleep(2)

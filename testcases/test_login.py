@@ -65,3 +65,5 @@ def test_missing_password(setup):
     login_page.click_login()
     time.sleep(1)
     assert "Password is required." in driver.page_source
+
+
