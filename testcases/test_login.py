@@ -17,10 +17,10 @@ def test_invalid_login(setup):
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
     login_page.click_sign_in()
-    login_page.enter_credentials('invalid.user@aithinkers.com', 'InvalidPassword')
+    login_page.enter_credentials('invalid.user@aithinkers', 'InvalidPassword')
     login_page.click_login()
     time.sleep(1)
-    assert "" in driver.page_source
+    assert "Please enter a valid email address." in driver.page_source
 
 
 def test_incorrect_password(setup):
@@ -39,7 +39,7 @@ def test_password_length_limit(setup):
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
     login_page.click_sign_in()
-    login_page.enter_credentials('sso.dev@aithinkers.com', 'B@123hbhwbdchbhbhdnjschlhjbchbhss')
+    login_page.enter_credentials('sso.dev@aithinkers.com', 'B@123hbhwbdchbhbhdnjschlhjbchbhss5659656565')
     login_page.click_login()
     time.sleep(1)
     assert "" in driver.page_source
@@ -65,5 +65,4 @@ def test_missing_password(setup):
     login_page.click_login()
     time.sleep(1)
     assert "Password is required." in driver.page_source
-
 
