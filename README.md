@@ -1,6 +1,6 @@
 # AI Portal Automation
 
-This project is an automation framework for the AI Portal, developed using Selenium and Python pytest. It includes test cases for the login functionality and various actions on the ToDo page.
+This project is an automation framework for the AI Portal, developed using Selenium and Python pytest.
 
 ## Project Structure
 
@@ -14,9 +14,7 @@ This project is an automation framework for the AI Portal, developed using Selen
 
 ## Features
 
-- Automated login functionality.
-- Test cases for ToDo page actions.
-- HTML reports for test execution results.
+- Automated portal functionality.
 
 ## Technologies Used
 - Pycharm
