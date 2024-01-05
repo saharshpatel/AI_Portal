@@ -14,6 +14,5 @@ class PolicyHelper:
             )
             cancel_button.click()
         except:
-            # Handle the case when the policy popup is not present or there's an issue
             pass
 
