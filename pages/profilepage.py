@@ -18,7 +18,7 @@ class ProfilePage:
         self.city_dropdown = (By.XPATH, "//select[@id='city']")
         self.zip_code_input = (By.XPATH, "//input[@placeholder='Zip Code']")
         self.confirm_button = (By.XPATH, "//button[@title='Confirm']")
-        self.upload_image_button = (By.XPATH, "//span[@role='button']//div//div")  # Adjust the XPath accordingly
+        self.upload_image_button = (By.XPATH, "//span[@role='button']//div//div")
 
     def click_profile_section(self):
         profile_section = WebDriverWait(self.driver, 15).until(
@@ -36,7 +36,7 @@ class ProfilePage:
         phone_input = WebDriverWait(self.driver, 15).until(
             EC.element_to_be_clickable(self.phone_input)
         )
-        self.driver.execute_script("arguments[0].value = '';", phone_input)  # Clear the field using JavaScript
+        self.driver.execute_script("arguments[0].value = '';", phone_input)  #Cleared the field using JavaScript
         time.sleep(2)
         phone_input.send_keys(phone)
 
