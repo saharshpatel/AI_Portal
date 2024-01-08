@@ -18,6 +18,7 @@ class ToDoPage:
         self.assign_unassign_button = (By.XPATH, "//body//div[@role='presentation']//div[@role='dialog']//div//div//div//div//div[2]//div[1]//div[2]//*[name()='svg']//*[name()='path' and contains(@d,'M13 8c0-2.')]")
         self.assignment_search_field = (By.XPATH, "//input[@placeholder='Enter Employee Name']")
         self.assignment_result = (By.XPATH, "//body/div[@role='presentation']/div/ul[@role='menu']/div/div/div/div/span[1]")
+        self.todo_item_locator = (By.XPATH, "/html[1]/body[1]/div[3]/div[3]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/span[1]/input[1]")
 
     def click_expand_todo(self):
         expand_todo_button = WebDriverWait(self.driver, 10).until(
@@ -81,4 +82,3 @@ class ToDoPage:
 
     def scroll_into_view(self, element):
         ActionChains(self.driver).move_to_element(element).perform()
-

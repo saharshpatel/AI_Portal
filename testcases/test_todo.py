@@ -20,19 +20,20 @@ def test_todo_functionality(login):
     time.sleep(2)
     todo_page.click_create_todo()
     time.sleep(2)
-    todo_page.enter_todo_title("title15")
+    todo_page.enter_todo_title("title16")
     time.sleep(2)
     todo_page.click_save_todo()
     time.sleep(2)
     todo_list_items = todo_page.get_todo_list_items()
     assert len(todo_list_items) == 1
-    assert todo_list_items[0].text == "title15"
+    assert todo_list_items[0].text == "title16"
     todo_list_items[0].click()
     time.sleep(2)
     todo_page.enter_todo_description("This is an automated test description7")
     time.sleep(1)
     todo_page.press_enter_key(todo_page.todo_description_input)
     time.sleep(1)
+
     todo_list = WebDriverWait(login, 15).until(
         EC.presence_of_element_located(todo_page.todo_list_item)
     )
