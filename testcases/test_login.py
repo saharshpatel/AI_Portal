@@ -8,7 +8,7 @@ def test_valid_login(setup):
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
     login_page.click_sign_in()
-    login_page.enter_credentials('sso.dev@aithinkers.com', 'Test123!')
+    login_page.enter_credentials('sso.dev@aithinkers.com', '')
     login_page.click_login()
     assert "" in driver.page_source
 
@@ -51,7 +51,7 @@ def test_missing_email(setup):
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
     login_page.click_sign_in()
-    login_page.enter_credentials('', 'Test123!')
+    login_page.enter_credentials('', '*******')
     login_page.click_login()
     time.sleep(1)
     assert "Email is required." in driver.page_source
