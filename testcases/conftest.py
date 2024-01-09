@@ -15,6 +15,6 @@ def login(setup):
     driver = setup
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.perform_login("sso.dev@aithinkers.com", "*******")
+    login_page.perform_login("sso.dev@aithinkers.com", "Test123!")
     return driver
 

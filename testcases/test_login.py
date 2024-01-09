@@ -1,6 +1,9 @@
 from pages.loginpage import LoginPage
 import time
 from helper.reporting_helper import take_screenshot, generate_html_report
+from selenium.webdriver.common.by import By
+
+# To run parallel test use "pytest -n 7 /Users/******patel/PycharmProjects/AI_Portal/testcases/test_login.py"
 
 
 def test_valid_login(setup):
@@ -8,7 +11,7 @@ def test_valid_login(setup):
     login_page = LoginPage(driver)
     driver.get('https://dev-portal.aithinkers.com/sign-in')
     login_page.click_sign_in()
-    login_page.enter_credentials('sso.dev@aithinkers.com', '')
+    login_page.enter_credentials('sso.dev@aithinkers.com', 'Test123!')
     login_page.click_login()
     assert "" in driver.page_source
 
@@ -21,7 +24,12 @@ def test_invalid_login(setup):
     login_page.enter_credentials('invalid.user@aithinkers', 'InvalidPassword')
     login_page.click_login()
     time.sleep(1)
-    assert "Please enter a valid email address." in driver.page_source
+
+    password_error_element = driver.find_element(By.XPATH, "//body//div//div[2]//div[2]")
+    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[2]")
+
+    assert "Password must be 8 characters minimum, should include capital letters, numbers & special characters." in password_error_element.text
+    assert "Please enter a valid email address." in email_error_element.text
 
 
 def test_incorrect_password(setup):
@@ -67,8 +75,8 @@ def test_missing_password(setup):
         login_page.enter_credentials('sso.dev@aithinkers.com', '')
         login_page.click_login()
         time.sleep(1)
-        assert "Password is required.123" in driver.page_source
-
+        assert "Password is required." in driver.page_source
+# If assert failed then "it will take screenshot of failed test"
     except Exception as e:
         screenshot_path = take_screenshot(driver, "test_missing_password")
         html_report = generate_html_report("test_missing_password", f"Test failed: {e}\n\n{driver.page_source}")
@@ -78,5 +86,19 @@ def test_missing_password(setup):
         print(f"HTML report saved at: {html_report}")
         raise e
 
+
+def test_missing_email_and_password(setup):
+    driver = setup
+    login_page = LoginPage(driver)
+    driver.get('https://dev-portal.aithinkers.com/sign-in')
+    login_page.click_sign_in()
+    login_page.enter_credentials('', '')  # Empty email and password
+    login_page.click_login()
+    time.sleep(1)
+    password_error_element = driver.find_element(By.XPATH, "//body//div//div[2]//div[2]")
+    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[2]")
+
+    assert password_error_element.text == "Password is required."
+    assert email_error_element.text == "Email is required."
 
 
