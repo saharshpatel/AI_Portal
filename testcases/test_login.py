@@ -9,8 +9,7 @@ from selenium.webdriver.common.by import By
 def test_valid_login(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
+    driver.get('https://dev-sso.aithinkers.com')
     login_page.enter_credentials('sso.dev@aithinkers.com', 'Test123!')
     login_page.click_login()
     assert "" in driver.page_source
@@ -19,14 +18,13 @@ def test_valid_login(setup):
 def test_invalid_login(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
+    driver.get('https://dev-sso.aithinkers.com')
     login_page.enter_credentials('invalid.user@aithinkers', 'InvalidPassword')
     login_page.click_login()
     time.sleep(1)
 
-    password_error_element = driver.find_element(By.XPATH, "//body//div//div[2]//div[2]")
-    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[2]")
+    password_error_element = driver.find_element(By.XPATH, "//div[2]//div[3]")
+    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[3]")
 
     assert "Password must be 8 characters minimum, should include capital letters, numbers & special characters." in password_error_element.text
     assert "Please enter a valid email address." in email_error_element.text
@@ -35,31 +33,28 @@ def test_invalid_login(setup):
 def test_incorrect_password(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
+    driver.get('https://dev-sso.aithinkers.com')
     login_page.enter_credentials('sso.dev@aithinkers.com', 'IncorrectPassword123!')
     login_page.click_login()
     time.sleep(1)
-    assert "" in driver.page_source
+    assert "Invalid Credentials" in driver.page_source
 
 
 def test_password_length_limit(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
+    driver.get('https://dev-sso.aithinkers.com')
     login_page.enter_credentials('sso.dev@aithinkers.com', 'B@123hbhwbdchbhbhdnjschlhjbchbhss5659656565')
     login_page.click_login()
     time.sleep(1)
-    assert "" in driver.page_source
+    assert "Invalid Credentials" in driver.page_source
 
 
 def test_missing_email(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
-    login_page.enter_credentials('', '*******')
+    driver.get('https://dev-sso.aithinkers.com')
+    login_page.enter_credentials('', 'Test123!')
     login_page.click_login()
     time.sleep(1)
     assert "Email is required." in driver.page_source
@@ -70,8 +65,7 @@ def test_missing_password(setup):
     login_page = LoginPage(driver)
 
     try:
-        driver.get('https://dev-portal.aithinkers.com/sign-in')
-        login_page.click_sign_in()
+        driver.get('https://dev-sso.aithinkers.com')
         login_page.enter_credentials('sso.dev@aithinkers.com', '')
         login_page.click_login()
         time.sleep(1)
@@ -90,13 +84,12 @@ def test_missing_password(setup):
 def test_missing_email_and_password(setup):
     driver = setup
     login_page = LoginPage(driver)
-    driver.get('https://dev-portal.aithinkers.com/sign-in')
-    login_page.click_sign_in()
+    driver.get('https://dev-sso.aithinkers.com')
     login_page.enter_credentials('', '')  # Empty email and password
     login_page.click_login()
     time.sleep(1)
-    password_error_element = driver.find_element(By.XPATH, "//body//div//div[2]//div[2]")
-    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[2]")
+    password_error_element = driver.find_element(By.XPATH, "//div[2]//div[3]")
+    email_error_element = driver.find_element(By.XPATH, "//div//div//div[1]//div[3]")
 
     assert password_error_element.text == "Password is required."
     assert email_error_element.text == "Email is required."

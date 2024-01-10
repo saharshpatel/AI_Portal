@@ -6,14 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 class LoginPage:
     def __init__(self, driver):
         self.driver = driver
-        self.sign_in_button = (By.XPATH, "//button[text()='Sign In']")
         self.email_field = (By.ID, 'email-reg')
         self.password_field = (By.ID, 'password-reg')
         self.login_button = (By.XPATH, "//button[@type='submit']")
-
-    def click_sign_in(self):
-        sign_in_button = WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.sign_in_button))
-        sign_in_button.click()
 
     def enter_credentials(self, email, password):
         email_field = WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(self.email_field))
@@ -29,6 +24,5 @@ class LoginPage:
         login_button.click()
 
     def perform_login(self, email, password):
-        self.click_sign_in()
         self.enter_credentials(email, password)
         self.click_login()
