@@ -1,4 +1,5 @@
 import pytest
+from selenium.webdriver.common.by import By
 from pages.todopage import ToDoPage
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -20,23 +21,26 @@ def test_todo_functionality(login):
     time.sleep(2)
     todo_page.click_create_todo()
     time.sleep(2)
-    todo_page.enter_todo_title("title16")
+    todo_page.enter_todo_title("title17")
     time.sleep(2)
     todo_page.click_save_todo()
     time.sleep(2)
     todo_list_items = todo_page.get_todo_list_items()
     assert len(todo_list_items) == 1
-    assert todo_list_items[0].text == "title16"
+    assert todo_list_items[0].text == "title17"
     todo_list_items[0].click()
     time.sleep(2)
-    todo_page.enter_todo_description("This is an automated test description7")
+    todo_page.enter_todo_description("This is an automated test description8")
     time.sleep(1)
     todo_page.press_enter_key(todo_page.todo_description_input)
     time.sleep(1)
 
+    todo_created_popup = WebDriverWait(login, 15).until(
+        EC.presence_of_element_located((By.XPATH, "//div[@aria-hidden='true']//div[@role='presentation']//div[2]")))
+    assert "Todo created" in todo_created_popup.text
+
     todo_list = WebDriverWait(login, 15).until(
-        EC.presence_of_element_located(todo_page.todo_list_item)
-    )
+        EC.presence_of_element_located(todo_page.todo_list_item))
     todo_page.scroll_into_view(todo_list)
     ActionChains(login).move_to_element(todo_list).perform()
 
@@ -46,4 +50,6 @@ def test_todo_functionality(login):
     time.sleep(2)
     todo_page.select_assignment_result()
     time.sleep(2)
-
+    user_assigned_popup = WebDriverWait(login, 15).until(
+       EC.presence_of_element_located((By.XPATH, "//div[@aria-hidden='true']//div[@role='presentation']//div[2]")))
+    assert "User successfully Assigned" in user_assigned_popup.text
