@@ -18,6 +18,6 @@ This project is an automation framework for the AI Portal, developed using Selen
 
 ## Technologies Used
 
-- Pycharm
+- Pycharm / VS Code 2
 - Selenium WebDriver
 - Python pytest
