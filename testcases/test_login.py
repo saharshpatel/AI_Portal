@@ -10,7 +10,7 @@ def test_valid_login(setup):
     driver = setup
     login_page = LoginPage(driver)
     driver.get('https://dev-sso.aithinkers.com')
-    login_page.enter_credentials('sso.dev@aithinkers.com', 'Test123!')
+    login_page.enter_credentials('xycndkjn.com', '********')
     login_page.click_login()
     assert "" in driver.page_source
 
@@ -19,7 +19,7 @@ def test_invalid_login(setup):
     driver = setup
     login_page = LoginPage(driver)
     driver.get('https://dev-sso.aithinkers.com')
-    login_page.enter_credentials('invalid.user@aithinkers', 'InvalidPassword')
+    login_page.enter_credentials('xyz@xyz', 'InvalidPassword')
     login_page.click_login()
     time.sleep(1)
 
@@ -34,7 +34,7 @@ def test_incorrect_password(setup):
     driver = setup
     login_page = LoginPage(driver)
     driver.get('https://dev-sso.aithinkers.com')
-    login_page.enter_credentials('sso.dev@aithinkers.com', 'IncorrectPassword123!')
+    login_page.enter_credentials('xyz', 'IncorrectPassword123!')
     login_page.click_login()
     time.sleep(1)
     assert "Invalid Credentials" in driver.page_source
@@ -44,7 +44,7 @@ def test_password_length_limit(setup):
     driver = setup
     login_page = LoginPage(driver)
     driver.get('https://dev-sso.aithinkers.com')
-    login_page.enter_credentials('sso.dev@aithinkers.com', 'B@123hbhwbdchbhbhdnjschlhjbchbhss5659656565')
+    login_page.enter_credentials('xyz.com', 'B@123hbhwbdchbhbhdnjschlhjbchbhss5659656565')
     login_page.click_login()
     time.sleep(1)
     assert "Invalid Credentials" in driver.page_source
@@ -66,7 +66,7 @@ def test_missing_password(setup):
 
     try:
         driver.get('https://dev-sso.aithinkers.com')
-        login_page.enter_credentials('sso.dev@aithinkers.com', '')
+        login_page.enter_credentials('xyz@.com', '')
         login_page.click_login()
         time.sleep(1)
         assert "Password is required." in driver.page_source
